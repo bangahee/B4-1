@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="반가희의 웹 개발 포트폴리오입니다."
+  >
+
+  <title>반가희 | Portfolio</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/main.js" defer></script>
+</head>
+
+<body>
+  <header class="site-header" id="site-header">
+    <nav class="navigation container" aria-label="주요 메뉴">
+      <a class="logo" href="#hero" aria-label="홈으로 이동">
+        Gahee.dev
+      </a>
+
+      <button
+        class="menu-toggle"
+        id="menu-toggle"
+        type="button"
+        aria-label="메뉴 열기"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="nav-menu" id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          type="button"
+          aria-label="다크 모드로 전환"
+        >
+          <span id="theme-icon" aria-hidden="true">🌙</span>
+          <span id="theme-text">Dark</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section" id="hero">
+      <div class="hero-content container reveal">
+        <p class="hero-eyebrow">Hello, I am</p>
+
+        <h1>
+          반가희의<br>
+          <span>웹 포트폴리오</span>
+        </h1>
+
+        <p class="hero-description">
+          순수 HTML, CSS, JavaScript를 사용하여
+          사용자 이벤트와 상태 변화가 화면에 반영되는 웹사이트를
+          만들고 있습니다.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#projects">
+            프로젝트 보기
+          </a>
+
+          <a class="button button-secondary" href="#contact">
+            문의하기
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="about section" id="about">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-label">About</p>
+          <h2>저를 소개합니다</h2>
+          <p>
+            새로운 기술을 직접 구현하고 그 동작 원리를 이해하는 것을
+            좋아합니다.
+          </p>
+        </div>
+
+        <div class="about-layout">
+          <div class="profile-image-wrapper reveal">
+            <img
+              class="profile-image"
+              src="images/profile.png"
+              alt="노트북으로 웹 개발을 공부하는 학생의 일러스트"
+            >
+          </div>
+
+          <article class="about-content reveal">
+            <h3>배우고, 만들고, 설명합니다.</h3>
+
+            <p>
+              저는 컴퓨터 과학과 웹 개발을 공부하고 있습니다.
+              단순히 코드를 복사하는 것보다 각 기능이 어떤 구조로
+              동작하는지 이해하는 것을 중요하게 생각합니다.
+            </p>
+
+            <p>
+              이번 프로젝트에서는 시맨틱 HTML, 반응형 CSS,
+              DOM 이벤트 처리와 GitHub API 연동을 활용하여
+              실제로 동작하는 포트폴리오를 구현했습니다.
+            </p>
+
+            <dl class="about-details">
+              <div>
+                <dt>관심 분야</dt>
+                <dd>웹 개발, 컴퓨터 과학</dd>
+              </div>
+
+              <div>
+                <dt>현재 학습</dt>
+                <dd>HTML, CSS, JavaScript</dd>
+              </div>
+
+              <div>
+                <dt>GitHub</dt>
+                <dd>
+                  <a
+                    href="https://github.com/bangahee"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    github.com/bangahee
+                  </a>
+                </dd>
+              </div>
+            </dl>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="skills section" id="skills">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-label">Skills</p>
+          <h2>사용 기술</h2>
+          <p>
+            프로젝트를 구현하면서 사용한 핵심 웹 기술입니다.
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <article class="skill-card reveal">
+            <span class="skill-icon" aria-hidden="true">HTML</span>
+            <h3>Semantic HTML</h3>
+            <p>
+              콘텐츠의 역할과 의미에 맞게
+              header, nav, main, section, article, footer를 사용했습니다.
+            </p>
+          </article>
+
+          <article class="skill-card reveal">
+            <span class="skill-icon" aria-hidden="true">CSS</span>
+            <h3>Responsive CSS</h3>
+            <p>
+              CSS 변수, Flexbox, Grid, 미디어 쿼리로
+              모바일 퍼스트 반응형 레이아웃을 구성했습니다.
+            </p>
+          </article>
+
+          <article class="skill-card reveal">
+            <span class="skill-icon" aria-hidden="true">JS</span>
+            <h3>JavaScript</h3>
+            <p>
+              DOM 조작, 이벤트 처리, 상태 관리,
+              비동기 API 호출을 JavaScript로 구현했습니다.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects section" id="projects">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-label">Projects</p>
+          <h2>GitHub 프로젝트</h2>
+          <p>
+            GitHub API에서 저장소 데이터를 가져와 동적으로 표시합니다.
+          </p>
+        </div>
+
+        <div
+          class="projects-status"
+          id="projects-status"
+          aria-live="polite"
+        ></div>
+
+        <div
+          class="projects-grid"
+          id="projects-grid"
+        ></div>
+      </div>
+    </section>
+
+    <section class="contact section" id="contact">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-label">Contact</p>
+          <h2>문의하기</h2>
+          <p>
+            아래 양식을 작성하면 브라우저에서 유효성을 검사합니다.
+          </p>
+        </div>
+
+        <div class="contact-layout">
+          <article class="contact-information reveal">
+            <h3>함께 이야기해요.</h3>
+
+            <p>
+              이 폼은 이름, 이메일, 메시지의 입력 여부와
+              이메일 형식을 검사합니다.
+            </p>
+
+            <a
+              class="contact-link"
+              href="https://github.com/bangahee"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub 방문하기
+            </a>
+          </article>
+
+          <form
+            class="contact-form reveal"
+            id="contact-form"
+            novalidate
+          >
+            <div class="form-group">
+              <label for="name">이름</label>
+
+              <input
+                id="name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                aria-describedby="name-error"
+              >
+
+              <small
+                class="error-message"
+                id="name-error"
+              ></small>
+            </div>
+
+            <div class="form-group">
+              <label for="email">이메일</label>
+
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                aria-describedby="email-error"
+              >
+
+              <small
+                class="error-message"
+                id="email-error"
+              ></small>
+            </div>
+
+            <div class="form-group">
+              <label for="message">메시지</label>
+
+              <textarea
+                id="message"
+                name="message"
+                rows="6"
+                aria-describedby="message-error"
+              ></textarea>
+
+              <small
+                class="error-message"
+                id="message-error"
+              ></small>
+            </div>
+
+            <button class="button button-primary" type="submit">
+              메시지 확인
+            </button>
+
+            <p
+              class="form-success"
+              id="form-success"
+              role="status"
+            ></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-content container">
+      <p>
+        &copy; <span id="current-year"></span> 반가희.
+        All rights reserved.
+      </p>
+
+      <ul class="footer-links">
+        <li>
+          <a
+            href="https://github.com/bangahee"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </li>
+
+        <li>
+          <a href="#hero">
+            Top
+          </a>
+        </li>
+      </ul>
+    </div>
+  </footer>
+
+  <button
+    class="scroll-top"
+    id="scroll-top"
+    type="button"
+    aria-label="페이지 맨 위로 이동"
+  >
+    ↑
+  </button>
+</body>
+</html>
