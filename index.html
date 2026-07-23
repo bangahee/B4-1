@@ -1,32 +1,113 @@
 <!DOCTYPE html>
+
+<!--
+  문서의 기본 언어를 한국어로 설정한다.
+  브라우저, 검색 엔진, 스크린 리더가
+  페이지의 언어를 이해하는 데 사용된다.
+-->
 <html lang="ko">
+
 <head>
+  <!--
+    한글과 특수문자가 깨지지 않도록
+    UTF-8 문자 인코딩을 사용한다.
+  -->
   <meta charset="UTF-8">
 
+  <!--
+    모바일 화면에서 페이지 너비를
+    실제 기기 너비에 맞춘다.
+  -->
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
 
+  <!--
+    검색 엔진과 링크 미리보기에서
+    페이지를 설명하는 문장으로 사용될 수 있다.
+  -->
   <meta
     name="description"
     content="반가희의 웹 개발 포트폴리오입니다."
   >
 
+  <!-- 브라우저 탭에 표시되는 페이지 제목 -->
   <title>반가희 | Portfolio</title>
 
-  <link rel="stylesheet" href="css/style.css">
+  <!--
+    외부 CSS 파일 연결
 
-  <script src="js/main.js" defer></script>
+    HTML은 구조,
+    CSS는 디자인과 레이아웃을 담당한다.
+  -->
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+
+  <!--
+    외부 JavaScript 파일 연결
+
+    defer:
+    HTML 구조가 모두 만들어진 후
+    JavaScript가 실행되도록 한다.
+  -->
+  <script
+    src="js/main.js"
+    defer
+  ></script>
 </head>
 
+
 <body>
-  <header class="site-header" id="site-header">
-    <nav class="navigation container" aria-label="주요 메뉴">
-      <a class="logo" href="#hero" aria-label="홈으로 이동">
+  <!-- =====================================================
+       1. Header와 Navigation
+       -----------------------------------------------------
+       header:
+       사이트의 상단 영역
+
+       nav:
+       페이지 내부 섹션으로 이동하는 주요 메뉴
+  ====================================================== -->
+
+  <header
+    class="site-header"
+    id="site-header"
+  >
+    <!--
+      aria-label:
+      스크린 리더 사용자에게
+      이 영역이 주요 메뉴임을 알려준다.
+    -->
+    <nav
+      class="navigation container"
+      aria-label="주요 메뉴"
+    >
+      <!--
+        사이트 로고 역할의 링크
+
+        href="#hero":
+        Hero 섹션으로 이동한다.
+      -->
+      <a
+        class="logo"
+        href="#hero"
+        aria-label="홈으로 이동"
+      >
         Gahee.dev
       </a>
 
+
+      <!--
+        모바일 화면에서 사용하는 햄버거 버튼
+
+        aria-expanded:
+        메뉴의 열림 여부를 나타낸다.
+
+        aria-controls:
+        이 버튼이 nav-menu를 제어한다는 뜻이다.
+      -->
       <button
         class="menu-toggle"
         id="menu-toggle"
@@ -35,74 +116,221 @@
         aria-expanded="false"
         aria-controls="nav-menu"
       >
+        <!-- 햄버거 버튼의 세 줄 -->
         <span></span>
         <span></span>
         <span></span>
       </button>
 
-      <div class="nav-menu" id="nav-menu">
+
+      <!--
+        실제 네비게이션 메뉴
+
+        모바일:
+        전체 화면 메뉴
+
+        데스크톱:
+        가로 메뉴
+      -->
+      <div
+        class="nav-menu"
+        id="nav-menu"
+      >
+        <!-- 순서가 없는 메뉴 목록 -->
         <ul class="nav-links">
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li>
+            <a href="#hero">
+              Home
+            </a>
+          </li>
+
+          <li>
+            <a href="#about">
+              About
+            </a>
+          </li>
+
+          <li>
+            <a href="#skills">
+              Skills
+            </a>
+          </li>
+
+          <li>
+            <a href="#projects">
+              Projects
+            </a>
+          </li>
+
+          <li>
+            <a href="#contact">
+              Contact
+            </a>
+          </li>
         </ul>
 
+
+        <!--
+          다크 모드 전환 버튼
+
+          JavaScript가 현재 테마에 따라
+          아이콘과 텍스트를 변경한다.
+        -->
         <button
           class="theme-toggle"
           id="theme-toggle"
           type="button"
           aria-label="다크 모드로 전환"
         >
-          <span id="theme-icon" aria-hidden="true">🌙</span>
-          <span id="theme-text">Dark</span>
+          <!--
+            아이콘은 장식용이므로
+            스크린 리더에서는 숨긴다.
+          -->
+          <span
+            id="theme-icon"
+            aria-hidden="true"
+          >
+            🌙
+          </span>
+
+          <!-- 현재 테마 전환 문구 -->
+          <span id="theme-text">
+            Dark
+          </span>
         </button>
       </div>
     </nav>
   </header>
 
-  <main>
-    <section class="hero section" id="hero">
-      <div class="hero-content container reveal">
-        <p class="hero-eyebrow">Hello, I am</p>
 
+  <!-- =====================================================
+       2. Main 콘텐츠
+       -----------------------------------------------------
+       페이지의 핵심 콘텐츠 전체를 감싼다.
+  ====================================================== -->
+
+  <main>
+    <!-- ===================================================
+         2-1. Hero 섹션
+         ---------------------------------------------------
+         사용자가 페이지를 처음 열었을 때 보이는
+         대표 소개 영역
+    ==================================================== -->
+
+    <section
+      class="hero section"
+      id="hero"
+    >
+      <!--
+        container:
+        콘텐츠 너비와 가운데 정렬 적용
+
+        reveal:
+        스크롤 애니메이션 대상
+      -->
+      <div class="hero-content container reveal">
+        <!-- 작은 인사말 -->
+        <p class="hero-eyebrow">
+          Hello, I am
+        </p>
+
+
+        <!--
+          페이지의 가장 중요한 제목이므로
+          h1 태그를 사용한다.
+        -->
         <h1>
           반가희의<br>
-          <span>웹 포트폴리오</span>
+
+          <!-- 강조 부분 -->
+          <span>
+            웹 포트폴리오
+          </span>
         </h1>
 
+
+        <!-- Hero 설명문 -->
         <p class="hero-description">
           순수 HTML, CSS, JavaScript를 사용하여
           사용자 이벤트와 상태 변화가 화면에 반영되는 웹사이트를
           만들고 있습니다.
         </p>
 
+
+        <!--
+          CTA 버튼 영역
+
+          CTA:
+          사용자가 다음 행동을 하도록 유도하는 버튼
+        -->
         <div class="hero-actions">
-          <a class="button button-primary" href="#projects">
+          <!-- Projects 섹션 이동 -->
+          <a
+            class="button button-primary"
+            href="#projects"
+          >
             프로젝트 보기
           </a>
 
-          <a class="button button-secondary" href="#contact">
+
+          <!-- Contact 섹션 이동 -->
+          <a
+            class="button button-secondary"
+            href="#contact"
+          >
             문의하기
           </a>
         </div>
       </div>
     </section>
 
-    <section class="about section" id="about">
+
+    <!-- ===================================================
+         2-2. About 섹션
+         ---------------------------------------------------
+         자기소개와 프로필 정보를 표시한다.
+    ==================================================== -->
+
+    <section
+      class="about section"
+      id="about"
+    >
       <div class="container">
+        <!-- 섹션 제목 영역 -->
         <div class="section-heading reveal">
-          <p class="section-label">About</p>
-          <h2>저를 소개합니다</h2>
+          <p class="section-label">
+            About
+          </p>
+
+          <h2>
+            저를 소개합니다
+          </h2>
+
           <p>
             새로운 기술을 직접 구현하고 그 동작 원리를 이해하는 것을
             좋아합니다.
           </p>
         </div>
 
+
+        <!--
+          About 내부 레이아웃
+
+          모바일:
+          한 열
+
+          태블릿 이상:
+          이미지와 설명을 두 열로 배치
+        -->
         <div class="about-layout">
+          <!-- 프로필 이미지 카드 -->
           <div class="profile-image-wrapper reveal">
+            <!--
+              alt:
+              이미지가 보이지 않거나
+              스크린 리더를 사용할 때
+              이미지의 의미를 설명한다.
+            -->
             <img
               class="profile-image"
               src="images/profile.png"
@@ -110,8 +338,16 @@
             >
           </div>
 
+
+          <!--
+            독립적으로 이해 가능한 자기소개 영역이므로
+            article을 사용한다.
+          -->
           <article class="about-content reveal">
-            <h3>배우고, 만들고, 설명합니다.</h3>
+            <h3>
+              배우고, 만들고, 설명합니다.
+            </h3>
+
 
             <p>
               저는 컴퓨터 과학과 웹 개발을 공부하고 있습니다.
@@ -119,26 +355,59 @@
               동작하는지 이해하는 것을 중요하게 생각합니다.
             </p>
 
+
             <p>
               이번 프로젝트에서는 시맨틱 HTML, 반응형 CSS,
               DOM 이벤트 처리와 GitHub API 연동을 활용하여
               실제로 동작하는 포트폴리오를 구현했습니다.
             </p>
 
+
+            <!--
+              설명 목록
+
+              dt:
+              항목 이름
+
+              dd:
+              항목 설명
+            -->
             <dl class="about-details">
               <div>
-                <dt>관심 분야</dt>
-                <dd>웹 개발, 컴퓨터 과학</dd>
-              </div>
+                <dt>
+                  관심 분야
+                </dt>
 
-              <div>
-                <dt>현재 학습</dt>
-                <dd>HTML, CSS, JavaScript</dd>
-              </div>
-
-              <div>
-                <dt>GitHub</dt>
                 <dd>
+                  웹 개발, 컴퓨터 과학
+                </dd>
+              </div>
+
+
+              <div>
+                <dt>
+                  현재 학습
+                </dt>
+
+                <dd>
+                  HTML, CSS, JavaScript
+                </dd>
+              </div>
+
+
+              <div>
+                <dt>
+                  GitHub
+                </dt>
+
+                <dd>
+                  <!--
+                    target="_blank":
+                    새 탭에서 열기
+
+                    rel="noopener noreferrer":
+                    외부 페이지가 원래 페이지에 접근하는 것을 제한
+                  -->
                   <a
                     href="https://github.com/bangahee"
                     target="_blank"
@@ -154,38 +423,101 @@
       </div>
     </section>
 
-    <section class="skills section" id="skills">
+
+    <!-- ===================================================
+         2-3. Skills 섹션
+         ---------------------------------------------------
+         프로젝트에서 사용한 기술을 카드로 표시한다.
+    ==================================================== -->
+
+    <section
+      class="skills section"
+      id="skills"
+    >
       <div class="container">
+        <!-- Skills 섹션 제목 -->
         <div class="section-heading reveal">
-          <p class="section-label">Skills</p>
-          <h2>사용 기술</h2>
+          <p class="section-label">
+            Skills
+          </p>
+
+          <h2>
+            사용 기술
+          </h2>
+
           <p>
             프로젝트를 구현하면서 사용한 핵심 웹 기술입니다.
           </p>
         </div>
 
+
+        <!--
+          기술 카드 Grid
+
+          모바일:
+          한 열
+
+          태블릿 이상:
+          세 열
+        -->
         <div class="skills-grid">
+          <!-- Semantic HTML 카드 -->
           <article class="skill-card reveal">
-            <span class="skill-icon" aria-hidden="true">HTML</span>
-            <h3>Semantic HTML</h3>
+            <!--
+              기술 아이콘은 장식 목적이므로
+              스크린 리더에서 숨긴다.
+            -->
+            <span
+              class="skill-icon"
+              aria-hidden="true"
+            >
+              HTML
+            </span>
+
+            <h3>
+              Semantic HTML
+            </h3>
+
             <p>
               콘텐츠의 역할과 의미에 맞게
               header, nav, main, section, article, footer를 사용했습니다.
             </p>
           </article>
 
+
+          <!-- Responsive CSS 카드 -->
           <article class="skill-card reveal">
-            <span class="skill-icon" aria-hidden="true">CSS</span>
-            <h3>Responsive CSS</h3>
+            <span
+              class="skill-icon"
+              aria-hidden="true"
+            >
+              CSS
+            </span>
+
+            <h3>
+              Responsive CSS
+            </h3>
+
             <p>
               CSS 변수, Flexbox, Grid, 미디어 쿼리로
               모바일 퍼스트 반응형 레이아웃을 구성했습니다.
             </p>
           </article>
 
+
+          <!-- JavaScript 카드 -->
           <article class="skill-card reveal">
-            <span class="skill-icon" aria-hidden="true">JS</span>
-            <h3>JavaScript</h3>
+            <span
+              class="skill-icon"
+              aria-hidden="true"
+            >
+              JS
+            </span>
+
+            <h3>
+              JavaScript
+            </h3>
+
             <p>
               DOM 조작, 이벤트 처리, 상태 관리,
               비동기 API 호출을 JavaScript로 구현했습니다.
@@ -195,22 +527,60 @@
       </div>
     </section>
 
-    <section class="projects section" id="projects">
+
+    <!-- ===================================================
+         2-4. Projects 섹션
+         ---------------------------------------------------
+         GitHub API에서 저장소 데이터를 가져와 표시한다.
+
+         HTML에는 빈 영역을 만들고
+         JavaScript가 상태에 따라 내용을 삽입한다.
+    ==================================================== -->
+
+    <section
+      class="projects section"
+      id="projects"
+    >
       <div class="container">
+        <!-- Projects 섹션 제목 -->
         <div class="section-heading reveal">
-          <p class="section-label">Projects</p>
-          <h2>GitHub 프로젝트</h2>
+          <p class="section-label">
+            Projects
+          </p>
+
+          <h2>
+            GitHub 프로젝트
+          </h2>
+
           <p>
             GitHub API에서 저장소 데이터를 가져와 동적으로 표시합니다.
           </p>
         </div>
 
+
+        <!--
+          API 상태 표시 영역
+
+          표시 상태:
+          - 로딩
+          - 에러
+          - 빈 데이터
+
+          aria-live="polite":
+          내용이 변경되면 스크린 리더가
+          자연스러운 시점에 알려준다.
+        -->
         <div
           class="projects-status"
           id="projects-status"
           aria-live="polite"
         ></div>
 
+
+        <!--
+          API 요청 성공 후
+          프로젝트 카드가 삽입되는 Grid 영역
+        -->
         <div
           class="projects-grid"
           id="projects-grid"
@@ -218,25 +588,58 @@
       </div>
     </section>
 
-    <section class="contact section" id="contact">
+
+    <!-- ===================================================
+         2-5. Contact 섹션
+         ---------------------------------------------------
+         문의 안내와 유효성 검사 폼을 제공한다.
+    ==================================================== -->
+
+    <section
+      class="contact section"
+      id="contact"
+    >
       <div class="container">
+        <!-- Contact 섹션 제목 -->
         <div class="section-heading reveal">
-          <p class="section-label">Contact</p>
-          <h2>문의하기</h2>
+          <p class="section-label">
+            Contact
+          </p>
+
+          <h2>
+            문의하기
+          </h2>
+
           <p>
             아래 양식을 작성하면 브라우저에서 유효성을 검사합니다.
           </p>
         </div>
 
+
+        <!--
+          Contact 내부 레이아웃
+
+          모바일:
+          한 열
+
+          태블릿 이상:
+          안내 영역과 폼을 두 열로 배치
+        -->
         <div class="contact-layout">
+          <!-- Contact 안내 카드 -->
           <article class="contact-information reveal">
-            <h3>함께 이야기해요.</h3>
+            <h3>
+              함께 이야기해요.
+            </h3>
+
 
             <p>
               이 폼은 이름, 이메일, 메시지의 입력 여부와
               이메일 형식을 검사합니다.
             </p>
 
+
+            <!-- GitHub 외부 링크 -->
             <a
               class="contact-link"
               href="https://github.com/bangahee"
@@ -247,14 +650,40 @@
             </a>
           </article>
 
+
+          <!--
+            Contact 폼
+
+            novalidate:
+            브라우저 기본 검사 메시지를 사용하지 않고
+            JavaScript에서 직접 유효성을 검사한다.
+          -->
           <form
             class="contact-form reveal"
             id="contact-form"
             novalidate
           >
-            <div class="form-group">
-              <label for="name">이름</label>
+            <!-- ===============================
+                 이름 입력 필드
+            ================================ -->
 
+            <div class="form-group">
+              <!--
+                label의 for와 input의 id를 연결한다.
+                label을 클릭해도 입력창에 포커스가 이동한다.
+              -->
+              <label for="name">
+                이름
+              </label>
+
+
+              <!--
+                autocomplete="name":
+                브라우저의 이름 자동 완성 기능 사용
+
+                aria-describedby:
+                입력창과 오류 메시지를 연결
+              -->
               <input
                 id="name"
                 name="name"
@@ -263,15 +692,31 @@
                 aria-describedby="name-error"
               >
 
+
+              <!-- 이름 오류 메시지 영역 -->
               <small
                 class="error-message"
                 id="name-error"
               ></small>
             </div>
 
-            <div class="form-group">
-              <label for="email">이메일</label>
 
+            <!-- ===============================
+                 이메일 입력 필드
+            ================================ -->
+
+            <div class="form-group">
+              <label for="email">
+                이메일
+              </label>
+
+
+              <!--
+                type="email":
+                이메일 입력 필드라는 의미를 제공한다.
+
+                실제 유효성 검사는 JavaScript가 처리한다.
+              -->
               <input
                 id="email"
                 name="email"
@@ -280,15 +725,31 @@
                 aria-describedby="email-error"
               >
 
+
+              <!-- 이메일 오류 메시지 영역 -->
               <small
                 class="error-message"
                 id="email-error"
               ></small>
             </div>
 
-            <div class="form-group">
-              <label for="message">메시지</label>
 
+            <!-- ===============================
+                 메시지 입력 필드
+            ================================ -->
+
+            <div class="form-group">
+              <label for="message">
+                메시지
+              </label>
+
+
+              <!--
+                여러 줄 입력이 필요하므로 textarea 사용
+
+                rows="6":
+                기본 높이를 약 6줄로 설정한다.
+              -->
               <textarea
                 id="message"
                 name="message"
@@ -296,16 +757,36 @@
                 aria-describedby="message-error"
               ></textarea>
 
+
+              <!-- 메시지 오류 메시지 영역 -->
               <small
                 class="error-message"
                 id="message-error"
               ></small>
             </div>
 
-            <button class="button button-primary" type="submit">
+
+            <!--
+              폼 제출 버튼
+
+              JavaScript의 submit 이벤트가 실행되고,
+              event.preventDefault()로 새로고침을 막는다.
+            -->
+            <button
+              class="button button-primary"
+              type="submit"
+            >
               메시지 확인
             </button>
 
+
+            <!--
+              폼 제출 성공 메시지
+
+              role="status":
+              내용이 바뀌면 스크린 리더가
+              상태 메시지로 알려준다.
+            -->
             <p
               class="form-success"
               id="form-success"
@@ -317,15 +798,34 @@
     </section>
   </main>
 
+
+  <!-- =====================================================
+       3. Footer
+       -----------------------------------------------------
+       저작권과 외부 링크를 표시한다.
+  ====================================================== -->
+
   <footer class="site-footer">
     <div class="footer-content container">
+      <!--
+        &copy;:
+        저작권 기호
+
+        current-year:
+        JavaScript가 현재 연도를 자동으로 삽입한다.
+      -->
       <p>
-        &copy; <span id="current-year"></span> 반가희.
+        &copy;
+        <span id="current-year"></span>
+        반가희.
         All rights reserved.
       </p>
 
+
+      <!-- Footer 링크 목록 -->
       <ul class="footer-links">
         <li>
+          <!-- GitHub 외부 링크 -->
           <a
             href="https://github.com/bangahee"
             target="_blank"
@@ -335,7 +835,9 @@
           </a>
         </li>
 
+
         <li>
+          <!-- Hero 섹션으로 이동 -->
           <a href="#hero">
             Top
           </a>
@@ -343,6 +845,14 @@
       </ul>
     </div>
   </footer>
+
+
+  <!-- =====================================================
+       4. 맨 위로 가기 버튼
+       -----------------------------------------------------
+       스크롤이 300px 이상일 때
+       JavaScript가 visible 클래스를 추가한다.
+  ====================================================== -->
 
   <button
     class="scroll-top"
@@ -353,4 +863,5 @@
     ↑
   </button>
 </body>
+
 </html>
