@@ -42,11 +42,50 @@ const OBSERVER_THRESHOLD = 0.2;
 
 
 /* =========================================================
+   1-1. 동료 평가용 API 상태 테스트 설정
+   ---------------------------------------------------------
+   평소에는 모든 값을 false로 유지한다.
+
+   평가할 때 보여주고 싶은 상태 하나만 true로 변경한다.
+
+   loading:
+   로딩 화면을 일정 시간 동안 유지한 후
+   정상 프로젝트 카드를 표시한다.
+
+   apiError:
+   존재하지 않는 GitHub 사용자로 요청하여
+   에러 상태와 다시 시도 버튼을 표시한다.
+
+   emptyProjects:
+   API 요청은 성공시키지만 빈 배열을 사용하여
+   빈 상태 메시지를 표시한다.
+
+   주의:
+   여러 값을 동시에 true로 설정하지 않는다.
+========================================================= */
+
+const PEER_REVIEW_TEST = {
+  loading: false,
+  apiError: false,
+  emptyProjects: false,
+};
+
+/*
+  로딩 테스트를 유지할 시간이다.
+
+  JavaScript의 시간 단위는 밀리초이므로
+  3000은 3초를 의미한다.
+*/
+const TEST_LOADING_DELAY_MS = 3000;
+
+
+/* =========================================================
    2. 애플리케이션 상태 객체
    ---------------------------------------------------------
    현재 화면 상태를 하나의 객체에서 관리한다.
 
    핵심 흐름:
+
    사용자 이벤트
    → state 값 변경
    → 렌더링 함수 실행
@@ -108,6 +147,7 @@ const state = {
 
     /*
       각 입력 필드의 유효성 검사 오류 메시지
+
       오류가 없으면 빈 문자열을 저장한다.
     */
     errors: {
@@ -140,10 +180,12 @@ const state = {
   문서의 최상위 html 요소를 선택한다.
 
   다크 모드 전환 시 다음 속성을 변경한다.
+
   data-theme="light"
   data-theme="dark"
 */
-const documentElement = document.documentElement;
+const documentElement =
+  document.documentElement;
 
 
 /* 고정 헤더 */
@@ -203,6 +245,7 @@ const contactForm =
 
 /*
   Contact 폼 안의 모든 input과 textarea를 선택한다.
+
   각 입력 요소에 input 이벤트를 연결할 때 사용한다.
 */
 const formInputs =
@@ -235,6 +278,7 @@ const revealElements =
    이벤트 → 상태 변경 → 화면 업데이트
 
    전체 흐름:
+
    테마 버튼 클릭
    → toggleTheme()
    → state.theme 변경
@@ -351,6 +395,7 @@ const toggleTheme = () => {
    5. 모바일 햄버거 메뉴
    ---------------------------------------------------------
    전체 흐름:
+
    버튼 클릭
    → toggleMenu()
    → state.menuOpen 변경
@@ -512,6 +557,7 @@ const handleNavigationClick = (event) => {
    7. 스크롤 관련 UI
    ---------------------------------------------------------
    스크롤 위치에 따라:
+
    - 헤더 스타일 변경
    - 맨 위로 가기 버튼 표시
 ========================================================= */
@@ -912,13 +958,15 @@ const renderProjects = () => {
 
 
 /* =========================================================
-   10. GitHub API 호출
+   10. GitHub API 호출 및 동료 평가 테스트
    ---------------------------------------------------------
    API 호출 → 상태 변경 → 화면 업데이트
 
    전체 흐름:
+
    fetchProjects()
    → loading
+   → 선택한 테스트 적용
    → fetch 요청
    → 성공 또는 실패
    → success 또는 error
@@ -949,6 +997,38 @@ async function fetchProjects() {
 
   try {
     /*
+      동료 평가용 로딩 상태 테스트
+
+      PEER_REVIEW_TEST.loading이 true이면
+      실제 API 요청 전에 3초 동안 기다린다.
+
+      이 시간 동안 로딩 스피너와
+      로딩 메시지가 화면에 표시된다.
+    */
+    if (PEER_REVIEW_TEST.loading) {
+      await new Promise((resolve) => {
+        setTimeout(
+          resolve,
+          TEST_LOADING_DELAY_MS
+        );
+      });
+    }
+
+    /*
+      동료 평가용 에러 상태 테스트
+
+      apiError가 true이면
+      존재하지 않는 GitHub 사용자 이름을 사용한다.
+
+      GitHub API가 404 응답을 반환하고
+      catch에서 error 상태로 변경된다.
+    */
+    const requestUsername =
+      PEER_REVIEW_TEST.apiError
+        ? "this-user-does-not-exist-123456789"
+        : GITHUB_USERNAME;
+
+    /*
       GitHub API 주소를 만든다.
 
       sort=updated:
@@ -961,7 +1041,7 @@ async function fetchProjects() {
       한 번의 요청에서 최대 100개 저장소 요청
     */
     const endpoint =
-      `https://api.github.com/users/${GITHUB_USERNAME}/repos` +
+      `https://api.github.com/users/${requestUsername}/repos` +
       "?sort=updated&direction=desc&per_page=100";
 
     /*
@@ -990,6 +1070,9 @@ async function fetchProjects() {
       /*
         404:
         입력한 GitHub 사용자를 찾을 수 없음
+
+        apiError 테스트를 켜면
+        이 오류 상태를 확인할 수 있다.
       */
       if (response.status === 404) {
         throw new Error(
@@ -1012,21 +1095,27 @@ async function fetchProjects() {
       await response.json();
 
     /*
-      filter:
-      fork 및 archived 저장소를 제외한다.
+      동료 평가용 빈 상태 테스트
 
-      slice(0, 6):
-      최대 6개 저장소만 화면에 표시한다.
+      emptyProjects가 true이면
+      실제 저장소 데이터 대신 빈 배열을 사용한다.
+
+      false이면:
+      - fork 저장소 제외
+      - archived 저장소 제외
+      - 최대 6개만 선택
     */
     const visibleRepositories =
-      repositories
-        .filter((repository) => {
-          return (
-            !repository.fork &&
-            !repository.archived
-          );
-        })
-        .slice(0, 6);
+      PEER_REVIEW_TEST.emptyProjects
+        ? []
+        : repositories
+            .filter((repository) => {
+              return (
+                !repository.fork &&
+                !repository.archived
+              );
+            })
+            .slice(0, 6);
 
     /*
       요청 성공 상태로 변경한다.
@@ -1203,6 +1292,7 @@ const renderFormField = (fieldName) => {
 
   /*
     오류가 있으면 invalid 클래스를 추가한다.
+
     CSS에서 빨간색 테두리를 적용한다.
   */
   inputElement.classList.toggle(
