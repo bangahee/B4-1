@@ -1,29 +1,57 @@
-/* ================================
-   1. CSS 변수 및 기본 설정
-================================ */
+/* =========================================================
+   1. CSS 변수 및 기본 디자인 설정
+   ---------------------------------------------------------
+   반복해서 사용하는 색상, 간격, 그림자, 전환 속도를
+   변수로 정의한다.
+
+   장점:
+   - 디자인 값을 한 곳에서 관리할 수 있다.
+   - 다크 모드에서는 같은 변수 이름의 값만 교체하면 된다.
+   - 여러 요소에 동일한 디자인 규칙을 적용하기 쉽다.
+========================================================= */
 
 :root {
+  /* 사이트의 대표 색상 */
   --color-primary: #5b5bd6;
+
+  /* 대표 색상의 진한 버전: hover 상태 등에 사용 */
   --color-primary-dark: #4545b8;
+
+  /* 대표 색상의 연한 버전: 배경이나 포커스 효과에 사용 */
   --color-primary-light: #ececff;
 
+  /* 페이지 전체 기본 배경색 */
   --color-background: #f8f9fc;
+
+  /* 카드, 헤더, 섹션에 사용하는 표면 색상 */
   --color-surface: #ffffff;
+
+  /* 기본 surface보다 약간 진한 보조 표면 색상 */
   --color-surface-secondary: #f0f2f8;
 
+  /* 기본 글자 색상 */
   --color-text: #1f2430;
+
+  /* 설명문 등 보조 글자 색상 */
   --color-text-secondary: #61697a;
+
+  /* 테두리 색상 */
   --color-border: #dfe3ec;
 
+  /* 폼 오류 메시지 색상 */
   --color-error: #c93636;
+
+  /* 폼 제출 성공 메시지 색상 */
   --color-success: #16794f;
 
+  /* 운영체제에 맞는 기본 시스템 폰트 사용 */
   --font-family:
     -apple-system,
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
 
+  /* 공통 간격 값 */
   --spacing-xs: 0.5rem;
   --spacing-sm: 0.75rem;
   --spacing-md: 1rem;
@@ -32,19 +60,36 @@
   --spacing-2xl: 3rem;
   --spacing-3xl: 5rem;
 
+  /* 공통 모서리 둥글기 */
   --border-radius-sm: 0.5rem;
   --border-radius-md: 1rem;
   --border-radius-lg: 1.5rem;
 
-  --shadow-card: 0 1rem 2.5rem rgba(30, 37, 52, 0.08);
-  --shadow-header: 0 0.4rem 1.5rem rgba(30, 37, 52, 0.09);
+  /* 카드와 헤더에 사용하는 그림자 */
+  --shadow-card:
+    0 1rem 2.5rem rgba(30, 37, 52, 0.08);
 
+  --shadow-header:
+    0 0.4rem 1.5rem rgba(30, 37, 52, 0.09);
+
+  /* hover 및 화면 전환 속도 */
   --transition-fast: 180ms ease;
   --transition-normal: 300ms ease;
 
+  /* 고정 헤더 높이 */
   --header-height: 4.5rem;
+
+  /* 콘텐츠가 너무 넓어지지 않도록 최대 너비 설정 */
   --container-width: 70rem;
 }
+
+
+/* =========================================================
+   다크 모드 변수
+   ---------------------------------------------------------
+   JavaScript가 html 요소에 data-theme="dark"를 추가하면
+   아래 변수 값이 기존 :root 값을 덮어쓴다.
+========================================================= */
 
 [data-theme="dark"] {
   --color-primary: #9696ff;
@@ -62,113 +107,211 @@
   --color-error: #ff8b8b;
   --color-success: #73d9ab;
 
-  --shadow-card: 0 1rem 2.5rem rgba(0, 0, 0, 0.25);
-  --shadow-header: 0 0.4rem 1.5rem rgba(0, 0, 0, 0.32);
+  --shadow-card:
+    0 1rem 2.5rem rgba(0, 0, 0, 0.25);
+
+  --shadow-header:
+    0 0.4rem 1.5rem rgba(0, 0, 0, 0.32);
 }
 
-/* ================================
-   2. Reset
-================================ */
 
+/* =========================================================
+   2. 브라우저 기본 스타일 초기화
+   ---------------------------------------------------------
+   브라우저마다 다른 기본 여백과 크기 계산 방식을
+   통일하기 위한 설정이다.
+========================================================= */
+
+/* 모든 요소의 width와 height 계산에 padding과 border 포함 */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+
+/* 페이지 내부 앵커 이동을 부드럽게 처리 */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-height) + 1rem);
+
+  /*
+    고정 헤더 높이만큼 여백을 두어,
+    섹션 이동 시 제목이 헤더 뒤에 가려지지 않도록 한다.
+  */
+  scroll-padding-top:
+    calc(var(--header-height) + 1rem);
 }
 
+
+/* 페이지 전체 기본 스타일 */
 body {
+  /* 브라우저 기본 margin 제거 */
   margin: 0;
+
+  /* 지나치게 좁은 화면에서 레이아웃 붕괴 방지 */
   min-width: 20rem;
+
+  /* CSS 변수로 정의한 공통 폰트 사용 */
   font-family: var(--font-family);
+
+  /* 읽기 편한 줄 간격 */
   line-height: 1.6;
+
+  /* 기본 글자색 */
   color: var(--color-text);
+
+  /* 기본 배경색 */
   background-color: var(--color-background);
+
+  /* 다크 모드 전환 시 색상이 부드럽게 변경되도록 설정 */
   transition:
     color var(--transition-normal),
     background-color var(--transition-normal);
 }
 
+
+/*
+  모바일 메뉴가 열렸을 때
+  배경 페이지가 함께 스크롤되지 않도록 한다.
+*/
 body.menu-open {
   overflow: hidden;
 }
 
+
+/* 이미지 아래에 생기는 기본 inline 여백 제거 */
 img {
   display: block;
+
+  /* 부모 요소보다 이미지가 커지지 않게 제한 */
   max-width: 100%;
 }
 
+
+/* 링크의 기본 파란색과 밑줄 제거 */
 a {
   color: inherit;
   text-decoration: none;
 }
 
+
+/* 입력 요소와 버튼이 body의 폰트를 상속하도록 설정 */
 button,
 input,
 textarea {
   font: inherit;
 }
 
+
+/* 버튼 위에 마우스를 올리면 손가락 모양 표시 */
 button {
   cursor: pointer;
 }
 
+
+/* ul의 기본 점과 여백 제거 */
 ul {
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
-/* ================================
-   3. 공통 레이아웃
-================================ */
 
+/* =========================================================
+   3. 공통 레이아웃과 재사용 요소
+========================================================= */
+
+/*
+  페이지 콘텐츠를 가운데 정렬하고,
+  좌우 여백과 최대 너비를 통일한다.
+*/
 .container {
-  width: min(100% - 2rem, var(--container-width));
+  width:
+    min(
+      100% - 2rem,
+      var(--container-width)
+    );
+
   margin-inline: auto;
 }
 
+
+/* 모든 주요 section의 위아래 공통 여백 */
 .section {
   padding-block: var(--spacing-3xl);
 }
 
+
+/* section 제목 영역의 최대 너비와 아래 여백 */
 .section-heading {
   max-width: 42rem;
   margin-bottom: var(--spacing-2xl);
 }
 
+
+/* ABOUT, SKILLS 같은 작은 섹션 라벨 */
 .section-label {
-  margin: 0 0 var(--spacing-xs);
+  margin:
+    0 0 var(--spacing-xs);
+
   font-weight: 700;
   color: var(--color-primary);
+
+  /* 영문 텍스트를 대문자로 변경 */
   text-transform: uppercase;
+
+  /* 글자 간격을 넓혀 라벨 느낌을 준다 */
   letter-spacing: 0.12em;
 }
 
+
+/* 섹션의 큰 제목 */
 .section-heading h2 {
   margin: 0;
-  font-size: clamp(2rem, 7vw, 3rem);
+
+  /*
+    화면 크기에 따라 2rem에서 3rem 사이로
+    자동 조절되는 반응형 글자 크기
+  */
+  font-size:
+    clamp(2rem, 7vw, 3rem);
+
   line-height: 1.2;
 }
 
+
+/* 섹션 제목 아래 마지막 설명문 */
 .section-heading p:last-child {
-  margin: var(--spacing-md) 0 0;
+  margin:
+    var(--spacing-md) 0 0;
+
   color: var(--color-text-secondary);
 }
 
+
+/* 모든 버튼과 버튼 형태 링크의 공통 스타일 */
 .button {
+  /* 내부 요소 정렬을 위해 inline-flex 사용 */
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
+
   min-height: 3rem;
-  padding: 0.75rem 1.25rem;
-  border: 0.125rem solid transparent;
-  border-radius: var(--border-radius-sm);
+
+  padding:
+    0.75rem 1.25rem;
+
+  /* hover 시에도 크기가 변하지 않도록 투명 테두리 미리 설정 */
+  border:
+    0.125rem solid transparent;
+
+  border-radius:
+    var(--border-radius-sm);
+
   font-weight: 700;
+
+  /* 여러 속성의 hover 변화를 부드럽게 처리 */
   transition:
     transform var(--transition-fast),
     background-color var(--transition-fast),
@@ -176,186 +319,388 @@ ul {
     border-color var(--transition-fast);
 }
 
+
+/* 버튼 위에 마우스를 올리면 살짝 위로 이동 */
 .button:hover {
   transform: translateY(-0.15rem);
 }
 
+
+/*
+  키보드로 요소를 선택했을 때
+  현재 포커스 위치를 명확하게 보여준다.
+*/
 .button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 0.2rem solid var(--color-primary);
+  outline:
+    0.2rem solid var(--color-primary);
+
   outline-offset: 0.2rem;
 }
 
+
+/* 대표색 배경을 사용하는 기본 버튼 */
 .button-primary {
   color: #ffffff;
   background-color: var(--color-primary);
 }
 
+
+/* 기본 버튼 hover 시 더 진한 대표색 사용 */
 .button-primary:hover {
   background-color: var(--color-primary-dark);
 }
 
+
+/* 테두리만 있는 보조 버튼 */
 .button-secondary {
   color: var(--color-primary);
   border-color: var(--color-primary);
   background-color: transparent;
 }
 
+
+/* 보조 버튼 hover 시 대표색으로 채움 */
 .button-secondary:hover {
   color: #ffffff;
   background-color: var(--color-primary);
 }
 
-/* ================================
-   4. Header와 Navigation
-================================ */
 
+/* =========================================================
+   4. 고정 Header와 Navigation
+========================================================= */
+
+/*
+  헤더를 화면 상단에 고정한다.
+  스크롤하더라도 항상 화면 위에 남아 있다.
+*/
 .site-header {
   position: fixed;
+
+  /* 다른 콘텐츠보다 앞에 보이도록 설정 */
   z-index: 1000;
+
   top: 0;
   right: 0;
   left: 0;
-  min-height: var(--header-height);
+
+  min-height:
+    var(--header-height);
+
   transition:
     background-color var(--transition-normal),
     box-shadow var(--transition-normal);
 }
 
+
+/*
+  스크롤이 60px 이상일 때 JavaScript가
+  site-header에 scrolled 클래스를 추가한다.
+
+  모바일에서 backdrop-filter를 사용하면
+  position: fixed인 모바일 메뉴의 기준이 달라질 수 있어
+  전체 화면 메뉴가 잘리는 문제가 발생할 수 있다.
+
+  따라서 모바일 기본 스타일에서는 blur를 제거하고
+  불투명한 배경색만 사용한다.
+*/
 .site-header.scrolled {
-  background-color: color-mix(
-    in srgb,
-    var(--color-surface) 92%,
-    transparent
-  );
-  box-shadow: var(--shadow-header);
-  backdrop-filter: blur(0.75rem);
+  background-color:
+    var(--color-surface);
+
+  box-shadow:
+    var(--shadow-header);
 }
 
+
+/* 로고와 메뉴를 양쪽 끝에 배치 */
 .navigation {
   display: flex;
-  min-height: var(--header-height);
+
+  min-height:
+    var(--header-height);
+
   align-items: center;
   justify-content: space-between;
 }
 
+
+/* 사이트 로고 */
 .logo {
+  /*
+    메뉴가 열렸을 때도 로고가
+    모바일 메뉴보다 위에 표시되도록 relative와 z-index 설정
+  */
   position: relative;
   z-index: 1002;
+
   font-size: 1.2rem;
   font-weight: 800;
   color: var(--color-primary);
 }
 
+
+/* 모바일 햄버거 버튼 */
 .menu-toggle {
   position: relative;
   z-index: 1002;
+
   display: flex;
+
   width: 2.75rem;
   height: 2.75rem;
+
   padding: 0.65rem;
+
   border: 0;
-  border-radius: var(--border-radius-sm);
+
+  border-radius:
+    var(--border-radius-sm);
+
   flex-direction: column;
   justify-content: space-around;
-  background-color: var(--color-surface);
+
+  background-color:
+    var(--color-surface);
 }
 
+
+/* 햄버거 버튼의 세 줄 */
 .menu-toggle span {
   width: 100%;
   height: 0.15rem;
+
   border-radius: 999px;
-  background-color: var(--color-text);
+
+  background-color:
+    var(--color-text);
+
   transition:
     transform var(--transition-normal),
     opacity var(--transition-normal);
 }
 
+
+/*
+  메뉴가 열리면 첫 번째 줄을
+  아래로 이동하고 45도 회전한다.
+*/
 .menu-toggle.active span:nth-child(1) {
-  transform: translateY(0.55rem) rotate(45deg);
+  transform:
+    translateY(0.55rem)
+    rotate(45deg);
 }
 
+
+/* 메뉴가 열리면 가운데 줄 숨김 */
 .menu-toggle.active span:nth-child(2) {
   opacity: 0;
 }
 
+
+/*
+  메뉴가 열리면 마지막 줄을
+  위로 이동하고 반대 방향으로 회전한다.
+*/
 .menu-toggle.active span:nth-child(3) {
-  transform: translateY(-0.55rem) rotate(-45deg);
+  transform:
+    translateY(-0.55rem)
+    rotate(-45deg);
 }
 
+
+/* =========================================================
+   모바일 전체 화면 메뉴
+   ---------------------------------------------------------
+   수정 핵심:
+   - viewport 전체를 덮도록 top/right/bottom/left 사용
+   - 100vh와 100dvh 모두 지정
+   - 긴 메뉴에서도 스크롤 가능
+   - 현재 페이지 내용이 뒤에서 보이지 않도록 불투명 배경 사용
+========================================================= */
+
 .nav-menu {
+  /*
+    브라우저 화면을 기준으로 고정한다.
+    스크롤 위치와 관계없이 전체 화면을 덮는다.
+  */
   position: fixed;
+
   z-index: 1001;
-  inset: 0;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  /* 화면 전체 너비 */
+  width: 100%;
+
+  /*
+    100vh는 일반적인 화면 높이,
+    100dvh는 모바일 주소창 변화까지 반영한 실제 화면 높이
+  */
+  min-height: 100vh;
+  min-height: 100dvh;
+
   display: flex;
-  padding: calc(var(--header-height) + 2rem) 2rem 2rem;
+
+  /*
+    고정 헤더 높이만큼 위쪽 여백을 둔다.
+    메뉴가 로고나 닫기 버튼에 겹치지 않도록 한다.
+  */
+  padding:
+    calc(var(--header-height) + 2rem)
+    2rem
+    2rem;
+
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   gap: var(--spacing-xl);
-  background-color: var(--color-surface);
+
+  /*
+    투명 배경이 아닌 완전한 surface 색상을 사용해
+    뒤쪽 페이지 콘텐츠가 보이지 않도록 한다.
+  */
+  background-color:
+    var(--color-surface);
+
+  /* 기본 상태에서는 보이지 않음 */
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-1rem);
+
+  /* 위쪽으로 약간 이동된 상태에서 시작 */
+  transform:
+    translateY(-1rem);
+
+  /*
+    화면 높이가 작은 경우에도
+    메뉴 내부를 스크롤할 수 있도록 한다.
+  */
+  overflow-y: auto;
+
   transition:
     opacity var(--transition-normal),
     visibility var(--transition-normal),
     transform var(--transition-normal);
 }
 
+
+/*
+  JavaScript가 active 클래스를 추가하면
+  메뉴가 화면 전체에 표시된다.
+*/
 .nav-menu.active {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+
+  transform:
+    translateY(0);
 }
 
+
+/* 모바일 메뉴 링크 목록 */
 .nav-links {
   display: flex;
+
   flex-direction: column;
-  gap: var(--spacing-xl);
+  align-items: center;
+
+  gap: 1.5rem;
+
   text-align: center;
 }
 
+
+/* 모바일 메뉴의 각 링크 */
 .nav-links a {
+  display: block;
+
   font-size: 1.25rem;
   font-weight: 700;
-  transition: color var(--transition-fast);
+
+  transition:
+    color var(--transition-fast);
 }
 
+
+/* 메뉴 링크 hover 시 대표색 */
 .nav-links a:hover {
   color: var(--color-primary);
 }
 
+
+/* 다크 모드 전환 버튼 */
 .theme-toggle {
   display: inline-flex;
-  padding: 0.65rem 0.9rem;
-  border: 0.0625rem solid var(--color-border);
+
+  padding:
+    0.65rem 0.9rem;
+
+  border:
+    0.0625rem solid
+    var(--color-border);
+
   border-radius: 999px;
+
   align-items: center;
-  gap: var(--spacing-xs);
-  color: var(--color-text);
-  background-color: var(--color-surface-secondary);
+
+  gap:
+    var(--spacing-xs);
+
+  color:
+    var(--color-text);
+
+  background-color:
+    var(--color-surface-secondary);
+
   transition:
     border-color var(--transition-fast),
     transform var(--transition-fast);
 }
 
+
+/* 테마 버튼 hover */
 .theme-toggle:hover {
-  border-color: var(--color-primary);
-  transform: translateY(-0.1rem);
+  border-color:
+    var(--color-primary);
+
+  transform:
+    translateY(-0.1rem);
 }
 
-/* ================================
-   5. Hero
-================================ */
 
+/* =========================================================
+   5. Hero 섹션
+========================================================= */
+
+/*
+  화면 첫 번째 영역을 viewport 높이만큼 설정한다.
+  Grid를 사용해 내용을 세로 중앙에 배치한다.
+*/
 .hero {
   display: grid;
+
   min-height: 100vh;
-  padding-top: calc(var(--header-height) + var(--spacing-2xl));
+
+  /*
+    고정 헤더와 콘텐츠가 겹치지 않도록
+    헤더 높이만큼 위쪽 여백을 추가한다.
+  */
+  padding-top:
+    calc(
+      var(--header-height) +
+      var(--spacing-2xl)
+    );
+
   align-items: center;
+
+  /* 우측 상단에 연한 원형 그라데이션 효과 */
   background:
     radial-gradient(
       circle at 85% 15%,
@@ -364,416 +709,832 @@ textarea:focus-visible {
     );
 }
 
+
+/* Hero 내부 위아래 간격 */
 .hero-content {
-  padding-block: var(--spacing-xl);
+  padding-block:
+    var(--spacing-xl);
 }
 
+
+/* "Hello, I am" 문구 */
 .hero-eyebrow {
-  margin: 0 0 var(--spacing-sm);
+  margin:
+    0 0 var(--spacing-sm);
+
   font-weight: 700;
   color: var(--color-primary);
 }
 
+
+/* Hero 메인 제목 */
 .hero h1 {
   max-width: 55rem;
   margin: 0;
-  font-size: clamp(3rem, 13vw, 6.5rem);
+
+  /*
+    모바일에서는 3rem,
+    큰 화면에서는 최대 6.5rem까지 자동 확대
+  */
+  font-size:
+    clamp(3rem, 13vw, 6.5rem);
+
   line-height: 1.05;
+
+  /* 큰 제목의 글자 간격을 조금 좁힘 */
   letter-spacing: -0.045em;
 }
 
+
+/* 제목 안에서 강조할 부분 */
 .hero h1 span {
-  color: var(--color-primary);
+  color:
+    var(--color-primary);
 }
 
+
+/* Hero 설명문 */
 .hero-description {
   max-width: 42rem;
-  margin: var(--spacing-lg) 0 0;
+
+  margin:
+    var(--spacing-lg) 0 0;
+
   font-size: 1.05rem;
-  color: var(--color-text-secondary);
+
+  color:
+    var(--color-text-secondary);
 }
 
+
+/* Hero 버튼 그룹: 모바일에서는 세로 배치 */
 .hero-actions {
   display: flex;
-  margin-top: var(--spacing-xl);
+
+  margin-top:
+    var(--spacing-xl);
+
   flex-direction: column;
-  gap: var(--spacing-sm);
+
+  gap:
+    var(--spacing-sm);
 }
 
-/* ================================
-   6. About
-================================ */
 
+/* =========================================================
+   6. About 섹션
+========================================================= */
+
+/* About 섹션에 surface 배경색 적용 */
 .about {
-  background-color: var(--color-surface);
+  background-color:
+    var(--color-surface);
 }
 
+
+/*
+  모바일에서는 이미지와 설명을
+  한 열로 배치한다.
+*/
 .about-layout {
   display: grid;
-  gap: var(--spacing-xl);
+
+  gap:
+    var(--spacing-xl);
 }
 
+
+/* 프로필 이미지의 외부 카드 */
 .profile-image-wrapper {
+  /* 이미지가 둥근 모서리 밖으로 나가지 않도록 숨김 */
   overflow: hidden;
+
   max-width: 28rem;
+
+  /* 가로 가운데 정렬 */
   margin-inline: auto;
-  border-radius: var(--border-radius-lg);
-  background-color: var(--color-primary-light);
-  box-shadow: var(--shadow-card);
+
+  border-radius:
+    var(--border-radius-lg);
+
+  background-color:
+    var(--color-primary-light);
+
+  box-shadow:
+    var(--shadow-card);
 }
 
+
+/* 실제 프로필 이미지 */
 .profile-image {
   width: 100%;
+
+  /* 정사각형 비율 유지 */
   aspect-ratio: 1 / 1;
+
+  /*
+    이미지가 비율을 유지하면서
+    영역 전체를 채우도록 설정
+  */
   object-fit: cover;
 }
 
+
+/* About 텍스트를 Grid 셀의 세로 중앙에 정렬 */
 .about-content {
   align-self: center;
 }
 
+
+/* About 내부 소제목 */
 .about-content h3 {
   margin-top: 0;
   font-size: 1.6rem;
 }
 
+
+/* About 설명문 색상 */
 .about-content p {
-  color: var(--color-text-secondary);
+  color:
+    var(--color-text-secondary);
 }
 
+
+/* 관심 분야, 학습 내용 등의 상세 정보 */
 .about-details {
   display: grid;
-  margin: var(--spacing-xl) 0 0;
-  gap: var(--spacing-md);
+
+  margin:
+    var(--spacing-xl) 0 0;
+
+  gap:
+    var(--spacing-md);
 }
 
+
+/* About 상세 정보 각각의 박스 */
 .about-details div {
-  padding: var(--spacing-md);
-  border: 0.0625rem solid var(--color-border);
-  border-radius: var(--border-radius-sm);
-  background-color: var(--color-surface-secondary);
+  padding:
+    var(--spacing-md);
+
+  border:
+    0.0625rem solid
+    var(--color-border);
+
+  border-radius:
+    var(--border-radius-sm);
+
+  background-color:
+    var(--color-surface-secondary);
 }
 
+
+/* dt는 항목 이름 */
 .about-details dt {
   font-weight: 700;
 }
 
+
+/* dd는 항목의 실제 내용 */
 .about-details dd {
-  margin: 0.25rem 0 0;
-  color: var(--color-text-secondary);
+  margin:
+    0.25rem 0 0;
+
+  color:
+    var(--color-text-secondary);
 }
 
+
+/* About 안의 GitHub 링크 */
 .about-details a {
-  color: var(--color-primary);
+  color:
+    var(--color-primary);
 }
 
-/* ================================
-   7. Skills
-================================ */
 
+/* =========================================================
+   7. Skills 섹션
+========================================================= */
+
+/* 모바일에서는 기술 카드를 한 열로 배치 */
 .skills-grid {
   display: grid;
-  gap: var(--spacing-lg);
+
+  gap:
+    var(--spacing-lg);
 }
 
+
+/* 각 기술 카드 */
 .skill-card {
-  padding: var(--spacing-xl);
-  border: 0.0625rem solid var(--color-border);
-  border-radius: var(--border-radius-md);
-  background-color: var(--color-surface);
-  box-shadow: var(--shadow-card);
+  padding:
+    var(--spacing-xl);
+
+  border:
+    0.0625rem solid
+    var(--color-border);
+
+  border-radius:
+    var(--border-radius-md);
+
+  background-color:
+    var(--color-surface);
+
+  box-shadow:
+    var(--shadow-card);
+
   transition:
     transform var(--transition-normal),
     border-color var(--transition-normal);
 }
 
+
+/* 기술 카드 hover 효과 */
 .skill-card:hover {
-  border-color: var(--color-primary);
-  transform: translateY(-0.4rem);
+  border-color:
+    var(--color-primary);
+
+  transform:
+    translateY(-0.4rem);
 }
 
+
+/* HTML, CSS, JS라고 표시되는 기술 아이콘 박스 */
 .skill-icon {
   display: inline-flex;
+
   min-width: 4rem;
   height: 4rem;
+
   padding-inline: 0.5rem;
-  border-radius: var(--border-radius-sm);
+
+  border-radius:
+    var(--border-radius-sm);
+
   align-items: center;
   justify-content: center;
+
   font-weight: 800;
-  color: var(--color-primary);
-  background-color: var(--color-primary-light);
+
+  color:
+    var(--color-primary);
+
+  background-color:
+    var(--color-primary-light);
 }
 
+
+/* 기술 카드 제목 */
 .skill-card h3 {
-  margin: var(--spacing-lg) 0 var(--spacing-sm);
+  margin:
+    var(--spacing-lg)
+    0
+    var(--spacing-sm);
 }
 
+
+/* 기술 카드 설명문 */
 .skill-card p {
   margin: 0;
-  color: var(--color-text-secondary);
+
+  color:
+    var(--color-text-secondary);
 }
 
-/* ================================
-   8. Projects
-================================ */
 
+/* =========================================================
+   8. Projects 섹션
+========================================================= */
+
+/* Projects 섹션 배경 */
 .projects {
-  background-color: var(--color-surface);
+  background-color:
+    var(--color-surface);
 }
 
+
+/*
+  API 상태 메시지가 나타날 공간을 미리 확보하여
+  로딩 전후 레이아웃 흔들림을 줄인다.
+*/
 .projects-status {
   min-height: 4rem;
 }
 
+
+/*
+  프로젝트 카드 반응형 Grid
+
+  auto-fit:
+  화면에 들어갈 수 있는 만큼 자동으로 열 생성
+
+  minmax:
+  카드 최소 너비는 17rem,
+  최대 너비는 남는 공간을 균등하게 사용
+*/
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(min(100%, 17rem), 1fr)
-  );
-  gap: var(--spacing-lg);
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(
+        min(100%, 17rem),
+        1fr
+      )
+    );
+
+  gap:
+    var(--spacing-lg);
 }
 
+
+/* GitHub 저장소 한 개를 표시하는 카드 */
 .project-card {
   display: flex;
+
   min-height: 17rem;
-  padding: var(--spacing-xl);
-  border: 0.0625rem solid var(--color-border);
-  border-radius: var(--border-radius-md);
+
+  padding:
+    var(--spacing-xl);
+
+  border:
+    0.0625rem solid
+    var(--color-border);
+
+  border-radius:
+    var(--border-radius-md);
+
+  /*
+    카드 안의 제목, 설명, 메타 정보, 링크를
+    위에서 아래로 배치한다.
+  */
   flex-direction: column;
-  background-color: var(--color-background);
-  box-shadow: var(--shadow-card);
+
+  background-color:
+    var(--color-background);
+
+  box-shadow:
+    var(--shadow-card);
+
   transition:
     transform var(--transition-normal),
     border-color var(--transition-normal);
 }
 
+
+/* 프로젝트 카드 hover */
 .project-card:hover {
-  border-color: var(--color-primary);
-  transform: translateY(-0.4rem);
+  border-color:
+    var(--color-primary);
+
+  transform:
+    translateY(-0.4rem);
 }
 
+
+/* 프로젝트 저장소 이름 */
 .project-card h3 {
   margin: 0;
   font-size: 1.25rem;
 }
 
+
+/* 프로젝트 설명 */
 .project-description {
-  margin: var(--spacing-md) 0;
+  margin:
+    var(--spacing-md) 0;
+
+  /*
+    남는 공간을 설명문이 차지하도록 하여
+    모든 카드의 링크 위치가 비슷해지게 한다.
+  */
   flex-grow: 1;
-  color: var(--color-text-secondary);
+
+  color:
+    var(--color-text-secondary);
 }
 
+
+/* 언어, 별, 수정 날짜 등의 정보 */
 .project-meta {
   display: flex;
-  margin-bottom: var(--spacing-lg);
+
+  margin-bottom:
+    var(--spacing-lg);
+
+  /* 공간이 부족하면 다음 줄로 이동 */
   flex-wrap: wrap;
-  gap: var(--spacing-sm);
+
+  gap:
+    var(--spacing-sm);
+
   font-size: 0.9rem;
-  color: var(--color-text-secondary);
+
+  color:
+    var(--color-text-secondary);
 }
 
+
+/* 각 메타 정보의 pill 형태 */
 .project-meta span {
-  padding: 0.3rem 0.6rem;
+  padding:
+    0.3rem 0.6rem;
+
   border-radius: 999px;
-  background-color: var(--color-surface-secondary);
+
+  background-color:
+    var(--color-surface-secondary);
 }
 
+
+/* GitHub 저장소 이동 링크 */
 .project-link {
   font-weight: 700;
-  color: var(--color-primary);
+
+  color:
+    var(--color-primary);
 }
 
+
+/* 링크 hover 시 밑줄 */
 .project-link:hover {
   text-decoration: underline;
 }
 
+
+/*
+  로딩, 에러, 빈 상태를 표시하는 공통 카드
+*/
 .status-card {
   display: flex;
+
   min-height: 8rem;
-  padding: var(--spacing-lg);
-  border: 0.0625rem solid var(--color-border);
-  border-radius: var(--border-radius-md);
+
+  padding:
+    var(--spacing-lg);
+
+  border:
+    0.0625rem solid
+    var(--color-border);
+
+  border-radius:
+    var(--border-radius-md);
+
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-md);
+
+  gap:
+    var(--spacing-md);
+
   text-align: center;
-  color: var(--color-text-secondary);
-  background-color: var(--color-background);
+
+  color:
+    var(--color-text-secondary);
+
+  background-color:
+    var(--color-background);
 }
 
+
+/* 상태 카드 문단 기본 여백 제거 */
 .status-card p {
   margin: 0;
 }
 
+
+/* API 로딩 중 회전하는 스피너 */
 .spinner {
   width: 2.5rem;
   height: 2.5rem;
-  border: 0.25rem solid var(--color-border);
-  border-top-color: var(--color-primary);
+
+  border:
+    0.25rem solid
+    var(--color-border);
+
+  /*
+    위쪽 테두리만 대표색으로 지정해
+    회전하는 모양을 만든다.
+  */
+  border-top-color:
+    var(--color-primary);
+
   border-radius: 50%;
-  animation: spin 800ms linear infinite;
+
+  animation:
+    spin 800ms linear infinite;
 }
 
+
+/* API 실패 시 다시 시도 버튼 */
 .retry-button {
-  padding: 0.6rem 1rem;
+  padding:
+    0.6rem 1rem;
+
   border: 0;
-  border-radius: var(--border-radius-sm);
+
+  border-radius:
+    var(--border-radius-sm);
+
   font-weight: 700;
+
   color: #ffffff;
-  background-color: var(--color-primary);
+
+  background-color:
+    var(--color-primary);
 }
 
+
+/* 스피너를 0도에서 360도까지 회전 */
 @keyframes spin {
   to {
-    transform: rotate(360deg);
+    transform:
+      rotate(360deg);
   }
 }
 
-/* ================================
-   9. Contact
-================================ */
 
+/* =========================================================
+   9. Contact 섹션
+========================================================= */
+
+/* 모바일에서는 문의 설명과 폼을 한 열로 배치 */
 .contact-layout {
   display: grid;
-  gap: var(--spacing-xl);
+
+  gap:
+    var(--spacing-xl);
 }
 
+
+/* Contact 왼쪽 소개 카드 */
 .contact-information {
-  padding: var(--spacing-xl);
-  border-radius: var(--border-radius-md);
+  padding:
+    var(--spacing-xl);
+
+  border-radius:
+    var(--border-radius-md);
+
   color: #ffffff;
-  background-color: var(--color-primary);
+
+  background-color:
+    var(--color-primary);
 }
 
+
+/* Contact 소개 카드 제목 */
 .contact-information h3 {
   margin-top: 0;
   font-size: 1.6rem;
 }
 
+
+/* Contact 소개 설명문을 약간 투명하게 처리 */
 .contact-information p {
   opacity: 0.9;
 }
 
+
+/* Contact 내부 GitHub 링크 */
 .contact-link {
   display: inline-block;
-  margin-top: var(--spacing-md);
+
+  margin-top:
+    var(--spacing-md);
+
   font-weight: 700;
   text-decoration: underline;
 }
 
+
+/* 문의 폼 카드 */
 .contact-form {
-  padding: var(--spacing-xl);
-  border: 0.0625rem solid var(--color-border);
-  border-radius: var(--border-radius-md);
-  background-color: var(--color-surface);
-  box-shadow: var(--shadow-card);
+  padding:
+    var(--spacing-xl);
+
+  border:
+    0.0625rem solid
+    var(--color-border);
+
+  border-radius:
+    var(--border-radius-md);
+
+  background-color:
+    var(--color-surface);
+
+  box-shadow:
+    var(--shadow-card);
 }
 
+
+/* 각 label, input, error-message 묶음 */
 .form-group {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom:
+    var(--spacing-lg);
 }
 
+
+/* 입력창 위의 label */
 .form-group label {
   display: block;
-  margin-bottom: var(--spacing-xs);
+
+  margin-bottom:
+    var(--spacing-xs);
+
   font-weight: 700;
 }
 
+
+/* input과 textarea 공통 스타일 */
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 0.8rem 0.9rem;
-  border: 0.0625rem solid var(--color-border);
-  border-radius: var(--border-radius-sm);
-  color: var(--color-text);
-  background-color: var(--color-background);
+
+  padding:
+    0.8rem 0.9rem;
+
+  border:
+    0.0625rem solid
+    var(--color-border);
+
+  border-radius:
+    var(--border-radius-sm);
+
+  color:
+    var(--color-text);
+
+  background-color:
+    var(--color-background);
+
   transition:
     border-color var(--transition-fast),
     box-shadow var(--transition-fast);
 }
 
+
+/* textarea는 세로 방향으로만 크기 조절 가능 */
 .form-group textarea {
   resize: vertical;
 }
 
+
+/*
+  입력창이 선택되었을 때
+  대표색 테두리와 바깥쪽 강조 효과 표시
+*/
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 0.2rem var(--color-primary-light);
+  border-color:
+    var(--color-primary);
+
+  box-shadow:
+    0 0 0 0.2rem
+    var(--color-primary-light);
 }
 
+
+/* 유효성 검사 실패 입력창 */
 .form-group input.invalid,
 .form-group textarea.invalid {
-  border-color: var(--color-error);
+  border-color:
+    var(--color-error);
 }
 
+
+/* 각 입력창 아래 오류 메시지 */
 .error-message {
   display: block;
+
+  /*
+    오류가 없어도 최소 높이를 유지하여
+    화면이 갑자기 움직이는 것을 줄인다.
+  */
   min-height: 1.4rem;
+
   margin-top: 0.35rem;
-  color: var(--color-error);
+
+  color:
+    var(--color-error);
 }
 
+
+/* 폼 제출 성공 메시지 */
 .form-success {
   min-height: 1.5rem;
-  margin: var(--spacing-md) 0 0;
+
+  margin:
+    var(--spacing-md) 0 0;
+
   font-weight: 700;
-  color: var(--color-success);
+
+  color:
+    var(--color-success);
 }
 
-/* ================================
-   10. Footer와 Scroll Top
-================================ */
 
+/* =========================================================
+   10. Footer와 맨 위로 가기 버튼
+========================================================= */
+
+/* 페이지 하단 Footer */
 .site-footer {
-  padding-block: var(--spacing-xl);
-  border-top: 0.0625rem solid var(--color-border);
-  background-color: var(--color-surface);
+  padding-block:
+    var(--spacing-xl);
+
+  border-top:
+    0.0625rem solid
+    var(--color-border);
+
+  background-color:
+    var(--color-surface);
 }
 
+
+/*
+  모바일에서는 Footer 내용을
+  세로 방향으로 배치한다.
+*/
 .footer-content {
   display: flex;
+
   flex-direction: column;
-  gap: var(--spacing-md);
+
+  gap:
+    var(--spacing-md);
+
   text-align: center;
-  color: var(--color-text-secondary);
+
+  color:
+    var(--color-text-secondary);
 }
 
+
+/* Footer 문단 기본 margin 제거 */
 .footer-content p {
   margin: 0;
 }
 
+
+/* Footer 링크들을 가로 배치 */
 .footer-links {
   display: flex;
+
   justify-content: center;
-  gap: var(--spacing-lg);
+
+  gap:
+    var(--spacing-lg);
 }
 
+
+/* Footer 링크 hover */
 .footer-links a:hover {
-  color: var(--color-primary);
+  color:
+    var(--color-primary);
 }
 
+
+/* 맨 위로 가기 버튼 */
 .scroll-top {
   position: fixed;
+
+  /*
+    모바일 메뉴보다 아래,
+    일반 콘텐츠보다 위에 보이도록 설정
+  */
   z-index: 900;
+
   right: 1.25rem;
   bottom: 1.25rem;
+
   display: grid;
+
   width: 3rem;
   height: 3rem;
+
   border: 0;
+
   border-radius: 50%;
+
   place-items: center;
+
   font-size: 1.3rem;
+
   color: #ffffff;
-  background-color: var(--color-primary);
-  box-shadow: var(--shadow-card);
+
+  background-color:
+    var(--color-primary);
+
+  box-shadow:
+    var(--shadow-card);
+
+  /* 기본적으로 숨김 */
   opacity: 0;
   visibility: hidden;
-  transform: translateY(1rem);
+
+  transform:
+    translateY(1rem);
+
   transition:
     opacity var(--transition-normal),
     visibility var(--transition-normal),
@@ -781,127 +1542,264 @@ textarea:focus-visible {
     background-color var(--transition-fast);
 }
 
+
+/*
+  스크롤이 300px 이상일 때
+  JavaScript가 visible 클래스를 추가한다.
+*/
 .scroll-top.visible {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+
+  transform:
+    translateY(0);
 }
 
+
+/* 맨 위 버튼 hover */
 .scroll-top:hover {
-  background-color: var(--color-primary-dark);
+  background-color:
+    var(--color-primary-dark);
 }
 
-/* ================================
-   11. 스크롤 애니메이션
-================================ */
 
+/* =========================================================
+   11. 스크롤 등장 애니메이션
+========================================================= */
+
+/*
+  reveal 클래스가 있는 요소는
+  처음에 투명하고 아래쪽으로 이동된 상태이다.
+*/
 .reveal {
   opacity: 0;
-  transform: translateY(2rem);
+
+  transform:
+    translateY(2rem);
+
   transition:
     opacity 700ms ease,
     transform 700ms ease;
 }
 
+
+/*
+  Intersection Observer가 요소를 감지하면
+  visible 클래스를 추가한다.
+*/
 .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
+
+  transform:
+    translateY(0);
 }
 
-/* JavaScript가 꺼졌을 때도 콘텐츠가 표시되도록 함 */
+
+/*
+  HTML에 no-js 클래스를 사용하는 경우,
+  JavaScript가 꺼져 있어도 콘텐츠가 보이도록 한다.
+*/
 .no-js .reveal {
   opacity: 1;
   transform: none;
 }
 
-/* ================================
-   12. Tablet: 768px 이상
-================================ */
+
+/* =========================================================
+   12. 태블릿 화면: 768px 이상
+   ---------------------------------------------------------
+   기본 모바일 레이아웃에서
+   화면이 넓어질 때 필요한 변화만 추가한다.
+========================================================= */
 
 @media (min-width: 48rem) {
+  /* 태블릿에서는 좌우 여백을 조금 더 넓게 설정 */
   .container {
-    width: min(100% - 3rem, var(--container-width));
+    width:
+      min(
+        100% - 3rem,
+        var(--container-width)
+      );
   }
 
+
+  /* Hero 버튼을 세로에서 가로 배치로 변경 */
   .hero-actions {
     flex-direction: row;
   }
 
+
+  /*
+    About을 이미지와 설명의
+    두 열 Grid로 변경
+  */
   .about-layout {
-    grid-template-columns: minmax(16rem, 0.8fr) 1.2fr;
+    grid-template-columns:
+      minmax(16rem, 0.8fr)
+      1.2fr;
+
     align-items: center;
-    gap: var(--spacing-2xl);
+
+    gap:
+      var(--spacing-2xl);
   }
 
+
+  /* Skills 카드를 세 열로 배치 */
   .skills-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+      repeat(3, 1fr);
   }
 
+
+  /*
+    Contact를 소개 영역과 폼의
+    두 열 Grid로 변경
+  */
   .contact-layout {
-    grid-template-columns: 0.8fr 1.2fr;
+    grid-template-columns:
+      0.8fr 1.2fr;
+
     align-items: start;
   }
 
+
+  /*
+    Footer 콘텐츠를 세로에서 가로 배치로 변경
+  */
   .footer-content {
     flex-direction: row;
+
     align-items: center;
     justify-content: space-between;
+
     text-align: left;
   }
 }
 
-/* ================================
-   13. Desktop: 1024px 이상
-================================ */
+
+/* =========================================================
+   13. 데스크톱 화면: 1024px 이상
+========================================================= */
 
 @media (min-width: 64rem) {
+  /* 데스크톱에서는 햄버거 버튼을 숨긴다 */
   .menu-toggle {
     display: none;
   }
 
+
+  /*
+    모바일 전체 화면 메뉴를 일반 가로 메뉴로 변경한다.
+  */
   .nav-menu {
+    /* fixed 해제 */
     position: static;
+
     display: flex;
+
+    /* 모바일에서 사용한 viewport 크기 설정 해제 */
+    width: auto;
+    min-height: auto;
+
     padding: 0;
+
     flex-direction: row;
     align-items: center;
-    gap: var(--spacing-xl);
+
+    gap:
+      var(--spacing-xl);
+
     background-color: transparent;
+
+    /* 데스크톱에서는 항상 보이도록 설정 */
     opacity: 1;
     visibility: visible;
+
     transform: none;
+
+    /* 모바일 메뉴의 내부 스크롤 해제 */
+    overflow-y: visible;
   }
 
+
+  /* 메뉴 링크를 세로에서 가로로 변경 */
   .nav-links {
     flex-direction: row;
     align-items: center;
-    gap: var(--spacing-lg);
+
+    gap:
+      var(--spacing-lg);
   }
 
+
+  /* 데스크톱 메뉴 글자 크기 */
   .nav-links a {
     font-size: 1rem;
   }
 
+
+  /*
+    데스크톱에서는 fixed 메뉴 문제가 없으므로
+    스크롤된 헤더에 blur 효과를 다시 적용할 수 있다.
+  */
+  .site-header.scrolled {
+    background-color:
+      color-mix(
+        in srgb,
+        var(--color-surface) 92%,
+        transparent
+      );
+
+    backdrop-filter:
+      blur(0.75rem);
+
+    /*
+      Safari 브라우저 호환을 위한
+      vendor prefix
+    */
+    -webkit-backdrop-filter:
+      blur(0.75rem);
+  }
+
+
+  /* 큰 화면에서 Hero 설명 글자 확대 */
   .hero-description {
     font-size: 1.15rem;
   }
 
+
+  /* 데스크톱에서는 섹션 위아래 여백 확대 */
   .section {
     padding-block: 6rem;
   }
 }
 
-/* ================================
-   14. 움직임 감소 설정
-================================ */
+
+/* =========================================================
+   14. 움직임 감소 접근성 설정
+   ---------------------------------------------------------
+   사용자가 운영체제에서
+   "움직임 줄이기"를 설정한 경우 적용된다.
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
+    /*
+      부드러운 스크롤을 끄고
+      애니메이션 및 transition 시간을 거의 없앤다.
+    */
     scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
   }
 }
